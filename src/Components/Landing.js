@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { loginUser } from '../ducks/authReducer'
+import { connect } from 'react-redux'
 import axios from 'axios'
 
 //TODO Write all methods, connect to store, connect methods to JSX
@@ -24,6 +26,7 @@ class Landing extends Component {
     axios
       .post('/auth/login', { email, password })
       .then((res) => {
+        this.props.loginUser(res.data)
         this.props.history.push('/dashboard')
       })
       .catch((err) => {
@@ -76,4 +79,4 @@ class Landing extends Component {
   }
 }
 
-export default Landing
+export default connect(null, { loginUser })(Landing)
